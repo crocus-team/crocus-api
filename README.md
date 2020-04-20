@@ -12,7 +12,7 @@ You can follow the project progress on this list.
 	- [ ] Error Handling
 - **Models**
 	- [x] User: *name, surname, email, password, photo, create_date*
-	- [ ] List: *name, color, owner, shared*
+	- [x] List: *name, color, owner_user, shared_users*
 	- [ ] Task: *title, content, create_date, expire_date, list_id*
 - **Routes/Controllers**
 	- Auth `[/auth]`
