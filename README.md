@@ -1,7 +1,6 @@
 
 # Crocus Backend
 
-## What is Crocus?
 Crocus allows you to keep a to-do list online and shared on different platforms.
 
 ## API Roadmap
@@ -12,7 +11,7 @@ You can follow the project progress on this list.
 	- [x] Middlewares
 	- [ ] Error Handling
 - **Models**
-	- [ ] User: *name, surname, email, password, photo*
+	- [ ] User: *name, surname, email, password, photo, create_date*
 	- [ ] List: *name, color, owner, shared*
 	- [ ] Task: *title, content, create_date, expire_date, list_id*
 - **Routes/Controllers**
