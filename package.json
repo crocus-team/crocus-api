@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "Crocus Backend",
   "main": "server.js",
-  "scripts": {},
+  "scripts": {
+    "start": "nodemon server.js"
+  },
   "author": "orcuntuna",
   "license": "GPL-3.0",
   "dependencies": {
@@ -14,5 +16,14 @@
   "devDependencies": {
     "nodemon": "^2.0.3",
     "prettier": "^2.0.4"
+  },
+  "prettier": {
+    "useTabs": false,
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "trailingComma": "all",
+    "jsxBracketSameLine": false
   }
 }
