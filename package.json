@@ -3,16 +3,16 @@
   "version": "0.0.1",
   "description": "Crocus Backend",
   "main": "server.js",
-  "scripts": {
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/crocus-team/crocus-api.git"
-  },
+  "scripts": {},
   "author": "orcuntuna",
   "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/crocus-team/crocus-api/issues"
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.9"
   },
-  "homepage": "https://github.com/crocus-team/crocus-api#readme"
+  "devDependencies": {
+    "nodemon": "^2.0.3",
+    "prettier": "^2.0.4"
+  }
 }
