@@ -13,7 +13,7 @@ You can follow the project progress on this list.
 - **Models**
 	- [x] User: *name, surname, email, password, photo, create_date*
 	- [x] List: *name, color, owner_user, shared_users*
-	- [ ] Task: *title, content, create_date, expire_date, list*
+	- [x] Task: *title, content, create_date, expire_date, list*
 - **Routes/Controllers**
 	- Auth `[/auth]`
 		- [ ] Register *(post)* `[/register]`

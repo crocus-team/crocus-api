@@ -28,4 +28,18 @@ const ListSchema = new mongoose.Schema({
   ],
 })
 
+// cascade delete tasks when a list is deleted
+ListSchema.pre('remove', async (next) => {
+  await this.model('Task').deleteMany({ list: this._id })
+  next()
+})
+
+// reverse populate with virtuals
+ListSchema.virtual('tasks', {
+  ref: 'Task',
+  localField: '_id',
+  foreignField: 'list',
+  justOne: false,
+})
+
 module.exports = mongoose.model('List', ListSchema)
