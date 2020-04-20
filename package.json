@@ -1,0 +1,18 @@
+{
+  "name": "crocus-api",
+  "version": "0.0.1",
+  "description": "Crocus Backend",
+  "main": "server.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crocus-team/crocus-api.git"
+  },
+  "author": "orcuntuna",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/crocus-team/crocus-api/issues"
+  },
+  "homepage": "https://github.com/crocus-team/crocus-api#readme"
+}
