@@ -6,6 +6,7 @@ const cors = require('cors')
 const hpp = require('hpp')
 require('dotenv').config()
 const database = require('./helpers/database')
+const errorHandler = require('./middlewares/error')
 
 const app = express()
 
@@ -26,9 +27,12 @@ app.use(cors())
 // connect database
 database.connect()
 
-app.get('/', (req, res) => {
+app.get('/', (req, res, next) => {
   res.send('Hello world!')
 })
+
+// error handler
+app.use(errorHandler)
 
 // start server
 app.listen(process.env.PORT, () => {
