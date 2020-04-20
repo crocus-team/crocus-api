@@ -9,7 +9,7 @@ You can follow the project progress on this list.
 	- [x] HTTP Server
 	- [x] Database Connect
 	- [x] Middlewares
-	- [ ] Error Handling
+	- [x] Error Handling
 - **Models**
 	- [x] User: *name, surname, email, password, photo, create_date*
 	- [x] List: *name, color, owner_user, shared_users*
