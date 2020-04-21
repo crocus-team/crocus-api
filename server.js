@@ -7,11 +7,11 @@ const hpp = require('hpp')
 require('dotenv').config()
 const database = require('./helpers/database')
 const errorHandler = require('./middlewares/error')
-
 const app = express()
 
-// body parser
+// body parser and static folder
 app.use(express.json())
+app.use(express.static('public'))
 
 // dev logging middleware
 if (process.env.NODE_ENV === 'development') {
