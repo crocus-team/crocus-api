@@ -16,8 +16,8 @@ You can follow the project progress on this list.
 	- [x] Task: *title, content, create_date, expire_date, list*
 - **Routes/Controllers**
 	- Auth `[/auth]`
-		- [ ] Register *(post)* `[/register]`
-		- [ ] Login *(post)* `[/login]`
+		- [x] Register *(post)* `[/register]`
+		- [x] Login *(post)* `[/login]`
 		- [ ] Logout *(get)* `[/logout]`
 		- [ ] Check Auth *(get, protect)* `[/check]`
 		- [ ] Forgot Password *(post)* `[/forgotpassword]`
