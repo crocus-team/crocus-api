@@ -22,7 +22,7 @@ You can follow the project progress on this list.
 		- [x] Check Auth *(get, protect)* `[/check]`
 		- [ ] Forgot Password *(post)* `[/forgotpassword]`
 	- User `[/user]`
-		- [ ] Update Details *(put, protect)* `[/details]`
+		- [x] Update Details *(put, protect)* `[/details]`
 		- [ ] Update Password *(put, protect)* `[/password]`
 		- [ ] Update Profile Photo *(put, protect)* `[/photo]`
 	- List `[/list]`

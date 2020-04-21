@@ -29,9 +29,11 @@ database.connect()
 
 // include routes
 const authRoutes = require('./routes/auth')
+const userRoutes = require('./routes/user')
 
 // use routes
 app.use('/api/auth', authRoutes)
+app.use('/api/user', userRoutes)
 
 // error handler
 app.use(errorHandler)
