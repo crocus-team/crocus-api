@@ -1,6 +1,7 @@
 const express = require('express')
 const morgan = require('morgan')
 const xss_clean = require('xss-clean')
+const fileupload = require('express-fileupload')
 const helmet = require('helmet')
 const cors = require('cors')
 const hpp = require('hpp')
@@ -9,9 +10,10 @@ const database = require('./helpers/database')
 const errorHandler = require('./middlewares/error')
 const app = express()
 
-// body parser and static folder
+// body parser, static folder, upload file
 app.use(express.json())
 app.use(express.static('public'))
+app.use(fileupload())
 
 // dev logging middleware
 if (process.env.NODE_ENV === 'development') {
