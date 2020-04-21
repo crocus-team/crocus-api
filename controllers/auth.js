@@ -31,6 +31,15 @@ exports.login = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res)
 })
 
+// logout user and clear cookie [GET] (auth/logout)
+exports.logout = asyncHandler(async (req, res, next) => {
+  res.cookie('token', 'none', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  })
+  res.status(200).json({success: true, data: {}})
+})
+
 const sendTokenResponse = (user, statusCode, res) => {
   // create token
   const token = user.getSignedJwtToken()

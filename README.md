@@ -18,7 +18,7 @@ You can follow the project progress on this list.
 	- Auth `[/auth]`
 		- [x] Register *(post)* `[/register]`
 		- [x] Login *(post)* `[/login]`
-		- [ ] Logout *(get)* `[/logout]`
+		- [x] Logout *(get)* `[/logout]`
 		- [ ] Check Auth *(get, protect)* `[/check]`
 		- [ ] Forgot Password *(post)* `[/forgotpassword]`
 	- User `[/user]`
