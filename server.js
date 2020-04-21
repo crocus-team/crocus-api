@@ -27,9 +27,11 @@ app.use(cors())
 // connect database
 database.connect()
 
-app.get('/', (req, res, next) => {
-  res.send('Hello world!')
-})
+// include routes
+const authRoutes = require('./routes/auth')
+
+// use routes
+app.use('/api/auth', authRoutes)
 
 // error handler
 app.use(errorHandler)
