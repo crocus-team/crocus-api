@@ -28,6 +28,10 @@ const UserSchema = new mongoose.Schema({
     minlength: 6,
     select: false,
   },
+  photo: {
+    type: String,
+    default: 'default.png',
+  },
   create_date: {
     type: Date,
     default: Date.now,
@@ -44,7 +48,7 @@ UserSchema.pre('save', async function (next) {
 })
 
 // sign jwt and return
-UserSchema.methods.getSignedJwtToken = function() {
+UserSchema.methods.getSignedJwtToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
   })
