@@ -2,7 +2,7 @@ const ErrorResponse = require('../helpers/errorResponse')
 const asyncHandler = require('../middlewares/async')
 const UserModel = require('../models/User')
 
-// register user (auth/register)
+// register user [POST] (auth/register)
 exports.register = asyncHandler(async (req, res, next) => {
   const { name, surname, email, password } = req.body
   const user = await UserModel.create({
@@ -11,6 +11,23 @@ exports.register = asyncHandler(async (req, res, next) => {
     email,
     password,
   })
+  sendTokenResponse(user, 200, res)
+})
+
+// login user [POST] (auth/login)
+exports.login = asyncHandler(async (req, res, next) => {
+  const { email, password } = req.body
+  if (!email || !password) {
+    return next(new ErrorResponse('Please provide an email and password', 400))
+  }
+  const user = await UserModel.findOne({ email }).select('+password')
+  if (!user) {
+    return next(new ErrorResponse('Invalid credentials', 401))
+  }
+  const isMatch = await user.matchPassword(password)
+  if (!isMatch) {
+    return next(new ErrorResponse('Invalid credentials', 401))
+  }
   sendTokenResponse(user, 200, res)
 })
 

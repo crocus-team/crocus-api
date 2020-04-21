@@ -35,9 +35,9 @@ const UserSchema = new mongoose.Schema({
 })
 
 // encrypt password using bcrypt
-UserSchema.pre('save', async function(next) {
+UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
-    next();
+    next()
   }
   const salt = await bcrypt.genSalt(10)
   this.password = await bcrypt.hash(this.password, salt)
@@ -51,7 +51,7 @@ UserSchema.methods.getSignedJwtToken = () => {
 }
 
 // match user entered password to hashed password in database
-UserSchema.methods.matchPassword = async (enteredPassword) => {
+UserSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password)
 }
 
