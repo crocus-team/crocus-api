@@ -1,4 +1,5 @@
 const ErrorResponse = require('../helpers/errorResponse')
+const sendTokenResponse = require('../helpers/tokenResponse')
 const asyncHandler = require('../middlewares/async')
 const UserModel = require('../models/User')
 
@@ -17,4 +18,16 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
     success: true,
     data: user,
   })
+})
+
+// update user password [PUT,PROTECTED] (/user/password)
+exports.updatePassword = asyncHandler(async (req, res, next) => {
+  const user = await UserModel.findById(req.user.id).select('+password')
+  const { current_password, new_password } = req.body
+  if (!(await user.matchPassword(current_password))) {
+    return next(new ErrorResponse('Password is incorrect', 401))
+  }
+  user.password = new_password
+  await user.save()
+  sendTokenResponse(user, 200, res)
 })

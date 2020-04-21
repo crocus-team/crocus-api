@@ -23,7 +23,7 @@ You can follow the project progress on this list.
 		- [ ] Forgot Password *(post)* `[/forgotpassword]`
 	- User `[/user]`
 		- [x] Update Details *(put, protect)* `[/details]`
-		- [ ] Update Password *(put, protect)* `[/password]`
+		- [x] Update Password *(put, protect)* `[/password]`
 		- [ ] Update Profile Photo *(put, protect)* `[/photo]`
 	- List `[/list]`
 		- [ ] My Lists *(get, protect)* `[/]`
