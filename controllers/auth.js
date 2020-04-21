@@ -40,6 +40,15 @@ exports.logout = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: {} })
 })
 
+// check auth [GET,PROTECTED] (auth/check)
+exports.check = asyncHandler(async (req, res, next) => {
+  const user = await UserModel.findById(req.user.id)
+  res.status(200).json({
+    success: true,
+    data: user,
+  })
+})
+
 const sendTokenResponse = (user, statusCode, res) => {
   // create token
   const token = user.getSignedJwtToken()
