@@ -32,10 +32,12 @@ database.connect()
 // include routes
 const authRoutes = require('./routes/auth')
 const userRoutes = require('./routes/user')
+const listRoutes = require('./routes/list')
 
 // use routes
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
+app.use('/api/list', listRoutes)
 
 // error handler
 app.use(errorHandler)

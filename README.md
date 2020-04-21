@@ -27,6 +27,7 @@ You can follow the project progress on this list.
 		- [x] Update Profile Photo *(put, protect)* `[/photo]`
 	- List `[/list]`
 		- [ ] My Lists *(get, protect)* `[/]`
+		- [x] Add List *(post, protect)* `[/]`
 		- [ ] List Details with Tasks *(get, protect)* `[/:listId]`
 		- [ ] Update List Details *(put, protect)* `[/:listId]`
 		- [ ] Delete List *(delete, protect)* `[/:listId]`
