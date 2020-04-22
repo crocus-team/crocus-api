@@ -18,6 +18,10 @@ const TaskSchema = new mongoose.Schema({
   expire_date: {
     type: Date,
   },
+  complate: {
+    type: Boolean,
+    default: false,
+  },
   list: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'List',

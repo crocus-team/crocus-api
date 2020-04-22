@@ -13,7 +13,7 @@ You can follow the project progress on this list.
 - **Models**
 	- [x] User: *name, surname, email, password, photo, create_date*
 	- [x] List: *name, color, owner_user, shared_users*
-	- [x] Task: *title, content, create_date, expire_date, list*
+	- [x] Task: *title, content, create_date, expire_date, complate, list*
 - **Routes/Controllers**
 	- Auth `[/auth]`
 		- [x] Register *(post)* `[/register]`
@@ -36,8 +36,8 @@ You can follow the project progress on this list.
 		- [ ] My All Tasks *(get, protect)* `[/]`
 		- [x] Add Task *(post, protect)* `[/]`
 		- [x] Task Details *(get, protect)* `[/:taskId]`
-		- [ ] Update Task *(put, protect)* `[/:taskId]`
-		- [ ] Detele Task *(delete, protect)* `[/:taskId]`
+		- [x] Update Task *(put, protect)* `[/:taskId]`
+		- [x] Detele Task *(delete, protect)* `[/:taskId]`
 		- [ ] List Upcoming Tasks *(get, protect)* `[/upcoming]`
 	- Share `[/share]`
 		- [ ] List Requests *(get, protect)* `[/]`

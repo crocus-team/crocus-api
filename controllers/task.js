@@ -30,3 +30,54 @@ exports.taskDetails = asyncHandler(async (req, res, next) => {
     next(new ErrorResponse('You are not authorized to view this list', 401))
   }
 })
+
+
+// update task [PUT,PROTECTED] (/task/:taskId)
+exports.updateTask = asyncHandler(async (req, res, next) => {
+  const task = await TaskModel.findById(req.params.taskId)
+  if (!task) {
+    return next(
+      new ErrorResponse(`Task not found with id of ${task.list}`, 404),
+    )
+  }
+  const list = await ListModel.findById(task.list)
+  if (!list) {
+    return next(
+      new ErrorResponse(`List not found with id of ${task.list}`, 404),
+    )
+  }
+  const checkAuthorize = await list.checkAuthorize(req.user.id)
+  if (checkAuthorize.authorize) {
+    task.title = req.body.title,
+    task.content = req.body.content,
+    task.expire_date = req.body.expire_date,
+    task.complate = req.body.complate
+    await task.save()
+    res.status(200).json({ success: true, data: task })
+  } else {
+    next(new ErrorResponse('You are not authorized to view this list', 401))
+  }
+})
+
+// delete task [DELETE,PROTECTED] (/task/:taskId)
+exports.deleteTask = asyncHandler(async (req, res, next) => {
+  const task = await TaskModel.findById(req.params.taskId)
+  if (!task) {
+    return next(
+      new ErrorResponse(`Task not found with id of ${task.list}`, 404),
+    )
+  }
+  const list = await ListModel.findById(task.list)
+  if (!list) {
+    return next(
+      new ErrorResponse(`List not found with id of ${task.list}`, 404),
+    )
+  }
+  const checkAuthorize = await list.checkAuthorize(req.user.id)
+  if (checkAuthorize.authorize) {
+    await task.remove()
+    res.status(200).json({ success: true, data: {} })
+  } else {
+    next(new ErrorResponse('You are not authorized to view this list', 401))
+  }
+})
