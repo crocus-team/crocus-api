@@ -37,3 +37,20 @@ exports.listDetails = asyncHandler(async (req, res, next) => {
     next(new ErrorResponse('You are not authorized to view this list', 401))
   }
 })
+
+// update list details [PUT,PROTECTED] (/:listId)
+exports.updateList = asyncHandler(async (req, res, next) => {
+  const list = await ListModel.findById(req.params.listId)
+  const checkAuthorize = await list.checkAuthorize(req.user.id)
+  if (checkAuthorize.authorize && checkAuthorize.owner) {
+    list.name = req.body.name
+    list.color = req.body.color
+    await list.save()
+    res.status(200).json({
+      success: true,
+      data: list,
+    })
+  } else {
+    next(new ErrorResponse('You are not authorized to edit this list', 401))
+  }
+})
