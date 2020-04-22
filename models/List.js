@@ -29,7 +29,7 @@ const ListSchema = new mongoose.Schema({
 })
 
 // cascade delete tasks when a list is deleted
-ListSchema.pre('remove', async (next) => {
+ListSchema.pre('remove', async function(next) {
   await this.model('Task').deleteMany({ list: this._id })
 })
 

@@ -27,6 +27,9 @@ exports.addList = asyncHandler(async (req, res, next) => {
 // list details [GET,PROTECTED] (/:listId)
 exports.listDetails = asyncHandler(async (req, res, next) => {
   const list = await ListModel.findById(req.params.listId)
+  if (!list) {
+    return next(new ErrorResponse(`List not found with id of ${req.params.listId}`, 404))
+  }
   const checkAuthorize = await list.checkAuthorize(req.user.id)
   if (checkAuthorize.authorize) {
     res.status(200).json({
@@ -41,6 +44,11 @@ exports.listDetails = asyncHandler(async (req, res, next) => {
 // update list details [PUT,PROTECTED] (/:listId)
 exports.updateList = asyncHandler(async (req, res, next) => {
   const list = await ListModel.findById(req.params.listId)
+  if (!list) {
+    return next(
+      new ErrorResponse(`List not found with id of ${req.params.listId}`, 404),
+    )
+  }
   const checkAuthorize = await list.checkAuthorize(req.user.id)
   if (checkAuthorize.authorize && checkAuthorize.owner) {
     list.name = req.body.name
@@ -49,6 +57,26 @@ exports.updateList = asyncHandler(async (req, res, next) => {
     res.status(200).json({
       success: true,
       data: list,
+    })
+  } else {
+    next(new ErrorResponse('You are not authorized to edit this list', 401))
+  }
+})
+
+// update list details [PUT,PROTECTED] (/:listId)
+exports.deleteList = asyncHandler(async (req, res, next) => {
+  const list = await ListModel.findById(req.params.listId)
+  if (!list) {
+    return next(
+      new ErrorResponse(`List not found with id of ${req.params.listId}`, 404),
+    )
+  }
+  const checkAuthorize = await list.checkAuthorize(req.user.id)
+  if (checkAuthorize.authorize && checkAuthorize.owner) {
+    await list.remove()
+    res.status(200).json({
+      success: true,
+      data: {},
     })
   } else {
     next(new ErrorResponse('You are not authorized to edit this list', 401))
