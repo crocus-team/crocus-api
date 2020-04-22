@@ -33,11 +33,13 @@ database.connect()
 const authRoutes = require('./routes/auth')
 const userRoutes = require('./routes/user')
 const listRoutes = require('./routes/list')
+const taskRoutes = require('./routes/task')
 
 // use routes
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/list', listRoutes)
+app.use('/api/task', taskRoutes)
 
 // error handler
 app.use(errorHandler)
