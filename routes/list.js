@@ -6,6 +6,7 @@ const {
   listDetails,
   updateList,
   deleteList,
+  removeUser
 } = require('../controllers/list')
 const { protect } = require('../middlewares/auth')
 
@@ -14,5 +15,6 @@ router.post('/', protect, addList)
 router.get('/:listId', protect, listDetails)
 router.put('/:listId', protect, updateList)
 router.delete('/:listId', protect, deleteList)
+router.delete('/:listId/:userId', protect, removeUser)
 
 module.exports = router

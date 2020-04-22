@@ -28,7 +28,9 @@ exports.addList = asyncHandler(async (req, res, next) => {
 exports.listDetails = asyncHandler(async (req, res, next) => {
   const list = await ListModel.findById(req.params.listId)
   if (!list) {
-    return next(new ErrorResponse(`List not found with id of ${req.params.listId}`, 404))
+    return next(
+      new ErrorResponse(`List not found with id of ${req.params.listId}`, 404),
+    )
   }
   const checkAuthorize = await list.checkAuthorize(req.user.id)
   if (checkAuthorize.authorize) {
@@ -63,7 +65,7 @@ exports.updateList = asyncHandler(async (req, res, next) => {
   }
 })
 
-// update list details [PUT,PROTECTED] (/:listId)
+// delete list [DELETE,PROTECTED] (/:listId)
 exports.deleteList = asyncHandler(async (req, res, next) => {
   const list = await ListModel.findById(req.params.listId)
   if (!list) {
@@ -78,6 +80,31 @@ exports.deleteList = asyncHandler(async (req, res, next) => {
       success: true,
       data: {},
     })
+  } else {
+    next(new ErrorResponse('You are not authorized to edit this list', 401))
+  }
+})
+
+// remove user from shared list [DELETE,PROTECTED] (/:listId/:userId)
+exports.removeUser = asyncHandler(async (req, res, next) => {
+  const list = await ListModel.findById(req.params.listId)
+  if (!list) {
+    return next(
+      new ErrorResponse(`List not found with id of ${req.params.listId}`, 404),
+    )
+  }
+  const checkAuthorize = await list.checkAuthorize(req.user.id)
+  if (checkAuthorize.authorize && checkAuthorize.owner) {
+    if (list.shared_users.includes(req.params.userId)) {
+      await list.shared_users.pull(req.params.userId)
+      await list.save()
+      res.status(200).json({
+        success: true,
+        data: {},
+      })
+    } else {
+      next(new ErrorResponse('User is not include this list', 404))
+    }
   } else {
     next(new ErrorResponse('You are not authorized to edit this list', 401))
   }
