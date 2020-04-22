@@ -33,6 +33,17 @@ ListSchema.pre('remove', async (next) => {
   await this.model('Task').deleteMany({ list: this._id })
 })
 
+// check authorize
+ListSchema.methods.checkAuthorize = async function (userId) {
+  if (this.owner_user == userId) {
+    return { authorize: true, owner: true }
+  } else if (this.shared_users.includes(userId)) {
+    return { authorize: true, owner: false }
+  } else {
+    return { authorize: false, owner: false }
+  }
+}
+
 // reverse populate with virtuals
 ListSchema.virtual('tasks', {
   ref: 'Task',

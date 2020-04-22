@@ -23,3 +23,17 @@ exports.addList = asyncHandler(async (req, res, next) => {
     data: list,
   })
 })
+
+// list details [GET,PROTECTED] (/:listId)
+exports.listDetails = asyncHandler(async (req, res, next) => {
+  const list = await ListModel.findById(req.params.listId)
+  const checkAuthorize = await list.checkAuthorize(req.user.id)
+  if (checkAuthorize.authorize) {
+    res.status(200).json({
+      success: true,
+      data: list,
+    })
+  } else {
+    next(new ErrorResponse('You are not authorized to view this list', 401))
+  }
+})
