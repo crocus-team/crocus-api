@@ -7,7 +7,7 @@ exports.myLists = asyncHandler(async (req, res, next) => {
   let lists = await ListModel.find().or([
     { owner_user: req.user.id },
     { shared_users: req.user.id },
-  ])
+  ]).populate('tasks')
   res.status(200).json({
     success: true,
     data: lists,
@@ -26,7 +26,7 @@ exports.addList = asyncHandler(async (req, res, next) => {
 
 // list details [GET,PROTECTED] (/:listId)
 exports.listDetails = asyncHandler(async (req, res, next) => {
-  const list = await ListModel.findById(req.params.listId)
+  const list = await ListModel.findById(req.params.listId).populate('tasks')
   if (!list) {
     return next(
       new ErrorResponse(`List not found with id of ${req.params.listId}`, 404),

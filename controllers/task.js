@@ -9,9 +9,15 @@ exports.addTask = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: task })
 })
 
+// list my all tasks [POST,PROTECTED] (/task/)
+exports.addTask = asyncHandler(async (req, res, next) => {
+  const task = await TaskModel.create(req.body)
+  res.status(200).json({ success: true, data: task })
+})
+
 // get task details [GET,PROTECTED] (/task/:taskId)
 exports.taskDetails = asyncHandler(async (req, res, next) => {
-  const task = await TaskModel.findById(req.params.taskId)
+  const task = await TaskModel.findById(req.params.taskId).populate('list')
   if (!task) {
     return next(
       new ErrorResponse(`Task not found with id of ${task.list}`, 404),

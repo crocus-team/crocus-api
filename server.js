@@ -5,6 +5,7 @@ const fileupload = require('express-fileupload')
 const helmet = require('helmet')
 const cors = require('cors')
 const hpp = require('hpp')
+const mongoSanitize = require('express-mongo-sanitize')
 require('dotenv').config()
 const database = require('./helpers/database')
 const errorHandler = require('./middlewares/error')
@@ -19,6 +20,9 @@ app.use(fileupload())
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
+
+// sanitize data
+app.use(mongoSanitize())
 
 // security middlewares
 app.use(helmet())
