@@ -5,12 +5,14 @@ const {
   taskDetails,
   updateTask,
   deleteTask,
-  allTasks
+  allTasks,
+  upcomingTasks
 } = require('../controllers/task')
 const { protect } = require('../middlewares/auth')
 
-router.post('/', protect, addTask)
 router.get('/', protect, allTasks)
+router.post('/', protect, addTask)
+router.get('/upcoming', protect, upcomingTasks)
 router.get('/:taskId', protect, taskDetails)
 router.put('/:taskId', protect, updateTask)
 router.delete('/:taskId', protect, deleteTask)

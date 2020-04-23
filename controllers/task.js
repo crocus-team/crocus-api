@@ -17,7 +17,6 @@ exports.allTasks = asyncHandler(async (req, res, next) => {
   let tasks = []
   const lists_data = JSON.parse(JSON.stringify(lists))
   await lists_data.map((list) => {
-    console.log(list.task)
     tasks = [...tasks, ...list.tasks]
   })
   res.status(200).json({
@@ -96,4 +95,31 @@ exports.deleteTask = asyncHandler(async (req, res, next) => {
   } else {
     next(new ErrorResponse('You are not authorized to view this list', 401))
   }
+})
+
+// upcoming tasks [GET,PROTECTED] (/task/upcoming)
+exports.upcomingTasks = asyncHandler(async (req, res, next) => {
+  let lists = await ListModel.find()
+    .or([{ owner_user: req.user.id }, { shared_users: req.user.id }])
+    .populate('tasks')
+  let tasks = []
+  const lists_data = JSON.parse(JSON.stringify(lists))
+  const now = new Date()
+  const tomorrow = new Date()
+  tomorrow.setDate(now.getDate() + 1)
+  for (let i in lists_data) {
+    for (let j in lists_data[i].tasks) {
+      task = lists_data[i].tasks[j]
+      if (task.expire_date) {
+        const expire_date = new Date(task.expire_date)
+        if (expire_date > now && expire_date < tomorrow) {
+          await tasks.push(task)
+        }
+      }
+    }
+  }
+  res.status(200).json({
+    success: true,
+    data: tasks,
+  })
 })
