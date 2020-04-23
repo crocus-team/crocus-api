@@ -9,10 +9,21 @@ exports.addTask = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: task })
 })
 
-// list my all tasks [POST,PROTECTED] (/task/)
-exports.addTask = asyncHandler(async (req, res, next) => {
-  const task = await TaskModel.create(req.body)
-  res.status(200).json({ success: true, data: task })
+// list my all tasks [GET,PROTECTED] (/task/)
+exports.allTasks = asyncHandler(async (req, res, next) => {
+  let lists = await ListModel.find()
+    .or([{ owner_user: req.user.id }, { shared_users: req.user.id }])
+    .populate('tasks')
+  let tasks = []
+  const lists_data = JSON.parse(JSON.stringify(lists))
+  await lists_data.map((list) => {
+    console.log(list.task)
+    tasks = [...tasks, ...list.tasks]
+  })
+  res.status(200).json({
+    success: true,
+    data: tasks,
+  })
 })
 
 // get task details [GET,PROTECTED] (/task/:taskId)
@@ -37,7 +48,6 @@ exports.taskDetails = asyncHandler(async (req, res, next) => {
   }
 })
 
-
 // update task [PUT,PROTECTED] (/task/:taskId)
 exports.updateTask = asyncHandler(async (req, res, next) => {
   const task = await TaskModel.findById(req.params.taskId)
@@ -54,10 +64,10 @@ exports.updateTask = asyncHandler(async (req, res, next) => {
   }
   const checkAuthorize = await list.checkAuthorize(req.user.id)
   if (checkAuthorize.authorize) {
-    task.title = req.body.title,
-    task.content = req.body.content,
-    task.expire_date = req.body.expire_date,
-    task.complate = req.body.complate
+    ;(task.title = req.body.title),
+      (task.content = req.body.content),
+      (task.expire_date = req.body.expire_date),
+      (task.complate = req.body.complate)
     await task.save()
     res.status(200).json({ success: true, data: task })
   } else {
