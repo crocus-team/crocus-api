@@ -24,7 +24,7 @@ exports.sendRequest = asyncHandler(async (req, res, next) => {
   }
   const checkAuthorize = await list.checkAuthorize(req.user.id)
   if (!checkAuthorize.authorize || !checkAuthorize.owner) {
-    next(
+    return next(
       new ErrorResponse(
         'You are not authorized to add users to this list',
         403,
@@ -34,11 +34,37 @@ exports.sendRequest = asyncHandler(async (req, res, next) => {
   const check_request = await ShareModel.findOne(request_data)
   if (check_request) {
     if (check_request.status === 0) {
-      next(new ErrorResponse('Same request is pending now', 403))
+      return next(new ErrorResponse('Same request is pending now', 403))
     } else if (check_request.status === 1) {
-      next(new ErrorResponse('This user is already added to the list', 403))
+      return next(new ErrorResponse('This user is already added to the list', 403))
     }
   }
   const request = await ShareModel.create(request_data)
   res.status(200).json(request)
+})
+
+// reply request [PUT,PROTECTED] (/share/:requestId)
+exports.replyRequest = asyncHandler(async (req, res, next) => {
+  const request = await ShareModel.findOneAndUpdate(
+    {
+      _id: req.params.requestId,
+      receiver: req.user.id,
+      status: 0,
+    },
+    {
+      status: req.body.status,
+    },
+    {
+      new: true,
+      runValidators: true,
+    },
+  )
+  console.log(request)
+  if (!request) {
+    return next(new ErrorResponse('Share request not found', 404))
+  }
+  res.status(200).json({
+    success: true,
+    data: request,
+  })
 })

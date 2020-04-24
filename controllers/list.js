@@ -39,7 +39,7 @@ exports.listDetails = asyncHandler(async (req, res, next) => {
       data: list,
     })
   } else {
-    next(new ErrorResponse('You are not authorized to view this list', 401))
+    return next(new ErrorResponse('You are not authorized to view this list', 401))
   }
 })
 
@@ -61,7 +61,7 @@ exports.updateList = asyncHandler(async (req, res, next) => {
       data: list,
     })
   } else {
-    next(new ErrorResponse('You are not authorized to edit this list', 401))
+    return next(new ErrorResponse('You are not authorized to edit this list', 401))
   }
 })
 
@@ -81,7 +81,7 @@ exports.deleteList = asyncHandler(async (req, res, next) => {
       data: {},
     })
   } else {
-    next(new ErrorResponse('You are not authorized to edit this list', 401))
+    return next(new ErrorResponse('You are not authorized to edit this list', 401))
   }
 })
 
@@ -103,9 +103,9 @@ exports.removeUser = asyncHandler(async (req, res, next) => {
         data: {},
       })
     } else {
-      next(new ErrorResponse('User is not include this list', 404))
+      return next(new ErrorResponse('User is not include this list', 404))
     }
   } else {
-    next(new ErrorResponse('You are not authorized to edit this list', 401))
+    return next(new ErrorResponse('You are not authorized to edit this list', 401))
   }
 })

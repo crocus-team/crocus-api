@@ -43,7 +43,7 @@ exports.taskDetails = asyncHandler(async (req, res, next) => {
   if (checkAuthorize.authorize) {
     res.status(200).json({ success: true, data: task })
   } else {
-    next(new ErrorResponse('You are not authorized to view this list', 401))
+    return next(new ErrorResponse('You are not authorized to view this list', 401))
   }
 })
 
@@ -70,7 +70,7 @@ exports.updateTask = asyncHandler(async (req, res, next) => {
     await task.save()
     res.status(200).json({ success: true, data: task })
   } else {
-    next(new ErrorResponse('You are not authorized to view this list', 401))
+    return next(new ErrorResponse('You are not authorized to view this list', 401))
   }
 })
 
@@ -93,7 +93,7 @@ exports.deleteTask = asyncHandler(async (req, res, next) => {
     await task.remove()
     res.status(200).json({ success: true, data: {} })
   } else {
-    next(new ErrorResponse('You are not authorized to view this list', 401))
+    return next(new ErrorResponse('You are not authorized to view this list', 401))
   }
 })
 
