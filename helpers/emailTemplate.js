@@ -1,4 +1,4 @@
-const email = ({ title, content }) => {
+const emailTemplate = ({ subject, content }) => {
   return `
   <!doctype html>
   <html>
@@ -343,7 +343,7 @@ const email = ({ title, content }) => {
       </style>
     </head>
     <body class="">
-      <span class="preheader">${title}</span>
+      <span class="preheader">${subject}</span>
       <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
         <tr>
           <td>&nbsp;</td>
@@ -359,7 +359,7 @@ const email = ({ title, content }) => {
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                       <tr>
                         <td>
-                          <h3 class="title">${title}</h3>  
+                          <h3 class="title">${subject}</h3>  
                           ${content}
                         </td>
                       </tr>
@@ -376,7 +376,7 @@ const email = ({ title, content }) => {
                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                   <tr>
                     <td class="content-block powered-by">
-                      Powered by <a href="${process.ENV.WEB_CLIENT_URL}">${process.ENV.PROJECT_NAME}</a>.
+                      Powered by <a href="${process.env.WEB_CLIENT_URL}">${process.env.PROJECT_NAME}</a>.
                     </td>
                   </tr>
                 </table>
@@ -392,3 +392,5 @@ const email = ({ title, content }) => {
   </html>
   `
 }
+
+module.exports = emailTemplate

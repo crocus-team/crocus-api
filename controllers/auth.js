@@ -2,6 +2,7 @@ const ErrorResponse = require('../helpers/errorResponse')
 const sendTokenResponse = require('../helpers/tokenResponse')
 const asyncHandler = require('../middlewares/async')
 const UserModel = require('../models/User')
+const sendEmail = require('../helpers/sendEmail')
 
 // register user [POST] (auth/register)
 exports.register = asyncHandler(async (req, res, next) => {
@@ -60,7 +61,14 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     user.reset_password_key = random_key
     user.reset_password_expire_date = expire_date
     await user.save()
-    // send email
+    await sendEmail({
+      email: user.email,
+      subject: 'Password Reset Request',
+      content: `
+        <p>Password Reset Code: ${random_key}</p>
+        <p>If you do not use this reset code within 24 hours, it will be canceled.</p>
+      `,
+    })
   }
   res.json({
     success: true,
