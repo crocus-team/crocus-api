@@ -5,7 +5,9 @@ const ListModel = require('../models/List')
 
 // list requests for me [GET,PROTECTED] (/share/)
 exports.listRequests = asyncHandler(async (req, res, next) => {
-  const requests = await ShareModel.find({ receiver: req.user.id }).populate('sender').populate('list')
+  const requests = await ShareModel.find({ receiver: req.user.id })
+    .populate('sender')
+    .populate('list')
   res.status(200).json({ success: true, data: requests })
 })
 
@@ -36,7 +38,9 @@ exports.sendRequest = asyncHandler(async (req, res, next) => {
     if (check_request.status === 0) {
       return next(new ErrorResponse('Same request is pending now', 403))
     } else if (check_request.status === 1) {
-      return next(new ErrorResponse('This user is already added to the list', 403))
+      return next(
+        new ErrorResponse('This user is already added to the list', 403),
+      )
     }
   }
   const request = await ShareModel.create(request_data)
@@ -65,5 +69,21 @@ exports.replyRequest = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: true,
     data: request,
+  })
+})
+
+// delete sended request [DELETE,PROTECTED] (/share/:requestId)
+exports.deleteRequest = asyncHandler(async (req, res, next) => {
+  const request = await ShareModel.findOneAndDelete({
+    _id: req.params.requestId,
+    sender: req.user.id,
+    status: 0,
+  })
+  if(!request){
+    return next(new ErrorResponse('Share request not found', 404))
+  }
+  res.status(200).json({
+    success: true,
+    data: {},
   })
 })
