@@ -35,7 +35,7 @@ You can follow the project progress on this list.
 		- [x] Update List Details *(put, protect)* `[/:listId]`
 		- [x] Delete List *(delete, protect)* `[/:listId]`
 		- [x] Remove User from List *(delete, protect)* `[/:listId/:userId]`
-		- [ ] Sended Requests for List *(get, protect)* `[/:listId/requests]`
+		- [x] Sent Requests for List *(get, protect)* `[/:listId/requests]`
 	- Task `[/task]`
 		- [x] My All Tasks *(get, protect)* `[/]`
 		- [x] Add Task *(post, protect)* `[/]`
