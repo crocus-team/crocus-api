@@ -13,7 +13,7 @@ You can follow the project progress on this list.
 	- [x] E-mail Template
 	- [ ] E-mail Sender on SMTP
 - **Models**
-	- [x] User: *name, surname, email, password, photo, create_date*
+	- [x] User: *name, surname, email, password, photo, create_date, reset_password_key, reset_password_expire_date*
 	- [x] List: *name, color, owner_user, shared_users*
 	- [x] Task: *title, content, create_date, expire_date, complate, list*
 	- [x] Share: *sender, receiver, list, status, sending_date*
@@ -24,6 +24,7 @@ You can follow the project progress on this list.
 		- [x] Logout *(get)* `[/logout]`
 		- [x] Check Auth *(get, protect)* `[/check]`
 		- [ ] Forgot Password *(post)* `[/forgotpassword]`
+		- [ ] Reset Password *(post)* `[/resetpassword]`
 	- User `[/user]`
 		- [x] Update Details *(put, protect)* `[/details]`
 		- [x] Update Password *(put, protect)* `[/password]`
