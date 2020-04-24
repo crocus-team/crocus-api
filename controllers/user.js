@@ -4,7 +4,7 @@ const sendTokenResponse = require('../helpers/tokenResponse')
 const asyncHandler = require('../middlewares/async')
 const UserModel = require('../models/User')
 
-// update user details [PUT,PROTECTED] (/user/details)
+// update user details [PUT,PROTECTED] (user/details)
 exports.updateDetails = asyncHandler(async (req, res, next) => {
   const fieldsToUpdate = {
     name: req.body.name,
@@ -21,7 +21,7 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
   })
 })
 
-// update user password [PUT,PROTECTED] (/user/password)
+// update user password [PUT,PROTECTED] (user/password)
 exports.updatePassword = asyncHandler(async (req, res, next) => {
   const user = await UserModel.findById(req.user.id).select('+password')
   const { current_password, new_password } = req.body
@@ -33,7 +33,7 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res)
 })
 
-// update user photo [PUT, PROTECTED] (/user/photo)
+// update user photo [PUT, PROTECTED] (user/photo)
 exports.updatePhoto = asyncHandler(async (req, res, next) => {
   const user = await UserModel.findById(req.user.id)
   if (!user) {

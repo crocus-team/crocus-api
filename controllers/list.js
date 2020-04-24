@@ -3,7 +3,7 @@ const asyncHandler = require('../middlewares/async')
 const ListModel = require('../models/List')
 const ShareModel = require('../models/Share')
 
-// list my all lists [GET,PROTECTED] (/list/)
+// list my all lists [GET,PROTECTED] (list)
 exports.myLists = asyncHandler(async (req, res, next) => {
   let lists = await ListModel.find()
     .or([{ owner_user: req.user.id }, { shared_users: req.user.id }])
@@ -14,7 +14,7 @@ exports.myLists = asyncHandler(async (req, res, next) => {
   })
 })
 
-// create new list [POST,PROTECTED] (/list/)
+// create new list [POST,PROTECTED] (list)
 exports.addList = asyncHandler(async (req, res, next) => {
   req.body.owner_user = req.user.id
   const list = await ListModel.create(req.body)
@@ -24,7 +24,7 @@ exports.addList = asyncHandler(async (req, res, next) => {
   })
 })
 
-// list details [GET,PROTECTED] (/list/:listId)
+// list details [GET,PROTECTED] (list/:listId)
 exports.listDetails = asyncHandler(async (req, res, next) => {
   const list = await ListModel.findById(req.params.listId).populate('tasks')
   if (!list) {
@@ -45,7 +45,7 @@ exports.listDetails = asyncHandler(async (req, res, next) => {
   }
 })
 
-// update list details [PUT,PROTECTED] (/list/:listId)
+// update list details [PUT,PROTECTED] (list/:listId)
 exports.updateList = asyncHandler(async (req, res, next) => {
   const list = await ListModel.findById(req.params.listId)
   if (!list) {
@@ -69,7 +69,7 @@ exports.updateList = asyncHandler(async (req, res, next) => {
   }
 })
 
-// delete list [DELETE,PROTECTED] (/list/:listId)
+// delete list [DELETE,PROTECTED] (list/:listId)
 exports.deleteList = asyncHandler(async (req, res, next) => {
   const list = await ListModel.findById(req.params.listId)
   if (!list) {
@@ -91,7 +91,7 @@ exports.deleteList = asyncHandler(async (req, res, next) => {
   }
 })
 
-// remove user from shared list [DELETE,PROTECTED] (/list/:listId/:userId)
+// remove user from shared list [DELETE,PROTECTED] (list/:listId/:userId)
 exports.removeUser = asyncHandler(async (req, res, next) => {
   const list = await ListModel.findById(req.params.listId)
   if (!list) {
@@ -118,7 +118,7 @@ exports.removeUser = asyncHandler(async (req, res, next) => {
   }
 })
 
-// sent request for list [GET,PROTECTED] (/list/:listId/requests)
+// sent request for list [GET,PROTECTED] (list/:listId/requests)
 exports.sentRequests = asyncHandler(async (req, res, next) => {
   const list = await ListModel.findById(req.params.listId).populate('tasks')
   if (!list) {

@@ -4,7 +4,7 @@ const asyncHandler = require('../middlewares/async')
 const ShareModel = require('../models/Share')
 const ListModel = require('../models/List')
 
-// list requests for me [GET,PROTECTED] (/share/)
+// list requests for me [GET,PROTECTED] (share)
 exports.listRequests = asyncHandler(async (req, res, next) => {
   const requests = await ShareModel.find({ receiver: req.user.id })
     .populate('sender')
@@ -12,7 +12,7 @@ exports.listRequests = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: requests })
 })
 
-// send request [POST,PROTECTED] (/share/)
+// send request [POST,PROTECTED] (share)
 exports.sendRequest = asyncHandler(async (req, res, next) => {
   const request_data = {
     sender: req.user.id,
@@ -48,7 +48,7 @@ exports.sendRequest = asyncHandler(async (req, res, next) => {
   res.status(200).json(request)
 })
 
-// reply request [PUT,PROTECTED] (/share/:requestId)
+// reply request [PUT,PROTECTED] (share/:requestId)
 exports.replyRequest = asyncHandler(async (req, res, next) => {
   if (!req.body.status) {
     return next(new ErrorResponse('status parameter is required', 403))
@@ -78,7 +78,7 @@ exports.replyRequest = asyncHandler(async (req, res, next) => {
   })
 })
 
-// delete sended request [DELETE,PROTECTED] (/share/:requestId)
+// delete sended request [DELETE,PROTECTED] (share/:requestId)
 exports.deleteRequest = asyncHandler(async (req, res, next) => {
   const request = await ShareModel.findOneAndDelete({
     _id: req.params.requestId,

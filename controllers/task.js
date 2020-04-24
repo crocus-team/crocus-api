@@ -3,13 +3,13 @@ const asyncHandler = require('../middlewares/async')
 const TaskModel = require('../models/Task')
 const ListModel = require('../models/List')
 
-// create new task [POST,PROTECTED] (/task/)
+// create new task [POST,PROTECTED] (task)
 exports.addTask = asyncHandler(async (req, res, next) => {
   const task = await TaskModel.create(req.body)
   res.status(200).json({ success: true, data: task })
 })
 
-// list my all tasks [GET,PROTECTED] (/task/)
+// list my all tasks [GET,PROTECTED] (task)
 exports.allTasks = asyncHandler(async (req, res, next) => {
   let lists = await ListModel.find()
     .or([{ owner_user: req.user.id }, { shared_users: req.user.id }])
@@ -25,7 +25,7 @@ exports.allTasks = asyncHandler(async (req, res, next) => {
   })
 })
 
-// get task details [GET,PROTECTED] (/task/:taskId)
+// get task details [GET,PROTECTED] (task/:taskId)
 exports.taskDetails = asyncHandler(async (req, res, next) => {
   const task = await TaskModel.findById(req.params.taskId).populate('list')
   if (!task) {
@@ -47,7 +47,7 @@ exports.taskDetails = asyncHandler(async (req, res, next) => {
   }
 })
 
-// update task [PUT,PROTECTED] (/task/:taskId)
+// update task [PUT,PROTECTED] (task/:taskId)
 exports.updateTask = asyncHandler(async (req, res, next) => {
   const task = await TaskModel.findById(req.params.taskId)
   if (!task) {
@@ -74,7 +74,7 @@ exports.updateTask = asyncHandler(async (req, res, next) => {
   }
 })
 
-// delete task [DELETE,PROTECTED] (/task/:taskId)
+// delete task [DELETE,PROTECTED] (task/:taskId)
 exports.deleteTask = asyncHandler(async (req, res, next) => {
   const task = await TaskModel.findById(req.params.taskId)
   if (!task) {
@@ -97,7 +97,7 @@ exports.deleteTask = asyncHandler(async (req, res, next) => {
   }
 })
 
-// upcoming tasks [GET,PROTECTED] (/task/upcoming)
+// upcoming tasks [GET,PROTECTED] (task/upcoming)
 exports.upcomingTasks = asyncHandler(async (req, res, next) => {
   let lists = await ListModel.find()
     .or([{ owner_user: req.user.id }, { shared_users: req.user.id }])
