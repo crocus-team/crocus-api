@@ -75,3 +75,42 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     data: { message: 'Reset email sent if this email is available' },
   })
 })
+
+// reset password with key [POST] (auth/resetpassword)
+exports.resetPassword = asyncHandler(async (req, res, next) => {
+  if (!req.body.password || !req.body.key) {
+    return next(new ErrorResponse('New password or reset key not found', 404))
+  }
+  const user = await UserModel.findOne({
+    email: req.body.email,
+    reset_password_key: req.body.key,
+  })
+  if (user) {
+    const now = new Date()
+    if (user.reset_password_expire_date > now) {
+      user.password = req.body.password
+      user.reset_password_key = null
+      user.reset_password_expire_date = now
+      await user.save()
+      const token = await user.getSignedJwtToken()
+      res.status(200).json({
+        success: true,
+        data: token,
+      })
+    } else {
+      return next(
+        new ErrorResponse(
+          'Password reset period has expired or information is incorrect',
+          400,
+        ),
+      )
+    }
+  } else {
+    return next(
+      new ErrorResponse(
+        'Password reset period has expired or information is incorrect',
+        400,
+      ),
+    )
+  }
+})

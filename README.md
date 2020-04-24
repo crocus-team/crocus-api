@@ -24,7 +24,7 @@ You can follow the project progress on this list.
 		- [x] Logout *(get)* `[/logout]`
 		- [x] Check Auth *(get, protect)* `[/check]`
 		- [x] Forgot Password *(post)* `[/forgotpassword]`
-		- [ ] Reset Password *(post)* `[/resetpassword]`
+		- [x] Reset Password *(post)* `[/resetpassword]`
 	- User `[/user]`
 		- [x] Update Details *(put, protect)* `[/details]`
 		- [x] Update Password *(put, protect)* `[/password]`
