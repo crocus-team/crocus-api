@@ -10,7 +10,7 @@ You can follow the project progress on this list.
 	- [x] Database Connect
 	- [x] Middlewares
 	- [x] Error Handling
-	- [ ] E-mail Template
+	- [x] E-mail Template
 	- [ ] E-mail Sender on SMTP
 - **Models**
 	- [x] User: *name, surname, email, password, photo, create_date*
