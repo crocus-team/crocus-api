@@ -49,3 +49,21 @@ exports.check = asyncHandler(async (req, res, next) => {
     data: user,
   })
 })
+
+// forgot password [POST] (auth/forgotpassword)
+exports.forgotPassword = asyncHandler(async (req, res, next) => {
+  const user = await UserModel.findOne({ email: req.body.email })
+  if (user) {
+    const random_key = Math.random().toString(36).substr(2, 20)
+    const expire_date = new Date()
+    expire_date.setDate(expire_date.getDate() + 1)
+    user.reset_password_key = random_key
+    user.reset_password_expire_date = expire_date
+    await user.save()
+    // send email
+  }
+  res.json({
+    success: true,
+    data: { message: 'Reset email sent if this email is available' },
+  })
+})
