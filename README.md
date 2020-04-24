@@ -11,7 +11,7 @@ You can follow the project progress on this list.
 	- [x] Middlewares
 	- [x] Error Handling
 	- [x] E-mail Template
-	- [ ] E-mail Sender on SMTP
+	- [x] E-mail Sender on SMTP
 - **Models**
 	- [x] User: *name, surname, email, password, photo, create_date, reset_password_key, reset_password_expire_date*
 	- [x] List: *name, color, owner_user, shared_users*
