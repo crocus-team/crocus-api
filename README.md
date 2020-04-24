@@ -43,7 +43,7 @@ You can follow the project progress on this list.
 		- [x] Detele Task *(delete, protect)* `[/:taskId]`
 		- [x] List Upcoming Tasks *(get, protect)* `[/upcoming]`
 	- Share `[/share]`
-		- [ ] List Requests *(get, protect)* `[/]`
+		- [x] List Requests *(get, protect)* `[/]`
 		- [ ] Send Request *(post, protect)* `[/]`
 		- [ ] Reply Request *(post, protect)* `[/:requestId]`
 		- [ ] List Sended Requests for List *(get, protect)* `[/list/:listId]`
