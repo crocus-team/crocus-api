@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const ErrorResponse = require('../helpers/errorResponse')
 const asyncHandler = require('../middlewares/async')
 const ShareModel = require('../models/Share')
@@ -49,22 +50,27 @@ exports.sendRequest = asyncHandler(async (req, res, next) => {
 
 // reply request [PUT,PROTECTED] (/share/:requestId)
 exports.replyRequest = asyncHandler(async (req, res, next) => {
-  const request = await ShareModel.findOneAndUpdate(
-    {
-      _id: req.params.requestId,
-      receiver: req.user.id,
-      status: 0,
-    },
-    {
-      status: req.body.status,
-    },
-    {
-      new: true,
-      runValidators: true,
-    },
-  )
+  if (!req.body.status) {
+    return next(new ErrorResponse('status parameter is required', 403))
+  }
+  const request = await ShareModel.findOne({
+    _id: req.params.requestId,
+    receiver: req.user.id,
+    status: 0,
+  })
   if (!request) {
     return next(new ErrorResponse('Share request not found', 404))
+  }
+  if (req.body.status === 1) {
+    const list = await ListModel.findById(request.list)
+    if (list.owner_user.toString() === request.sender.toString()) {
+      request.status = req.body.status
+      request.save()
+      list.shared_users.push(req.user.id)
+      await list.save()
+    } else {
+      return next(new ErrorResponse('Bad invitation', 400))
+    }
   }
   res.status(200).json({
     success: true,
@@ -79,7 +85,7 @@ exports.deleteRequest = asyncHandler(async (req, res, next) => {
     sender: req.user.id,
     status: 0,
   })
-  if(!request){
+  if (!request) {
     return next(new ErrorResponse('Share request not found', 404))
   }
   res.status(200).json({
