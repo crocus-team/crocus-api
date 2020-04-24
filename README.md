@@ -45,6 +45,6 @@ You can follow the project progress on this list.
 	- Share `[/share]`
 		- [x] List Requests *(get, protect)* `[/]`
 		- [x] Send Request *(post, protect)* `[/]`
-		- [ ] Reply Request *(put, protect)* `[/:requestId]`
+		- [x] Reply Request *(put, protect)* `[/:requestId]`
 		- [ ] List Sended Requests for List *(get, protect)* `[/list/:listId]`
 		- [ ] Delete Sended Request *(delete, protect)* `[/:requestId]`

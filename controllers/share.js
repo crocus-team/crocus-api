@@ -5,7 +5,7 @@ const ListModel = require('../models/List')
 
 // list requests for me [GET,PROTECTED] (/share/)
 exports.listRequests = asyncHandler(async (req, res, next) => {
-  const requests = await ShareModel.find({ receiver: req.user.id })
+  const requests = await ShareModel.find({ receiver: req.user.id }).populate('sender').populate('list')
   res.status(200).json({ success: true, data: requests })
 })
 
@@ -59,7 +59,6 @@ exports.replyRequest = asyncHandler(async (req, res, next) => {
       runValidators: true,
     },
   )
-  console.log(request)
   if (!request) {
     return next(new ErrorResponse('Share request not found', 404))
   }
