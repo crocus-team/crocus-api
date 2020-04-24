@@ -16,6 +16,7 @@ You can follow the project progress on this list.
 	- [x] User: *name, surname, email, password, photo, create_date*
 	- [x] List: *name, color, owner_user, shared_users*
 	- [x] Task: *title, content, create_date, expire_date, complate, list*
+	- [x] Share: *sender, receiver, list, status, sending_date*
 - **Routes/Controllers**
 	- Auth `[/auth]`
 		- [x] Register *(post)* `[/register]`
@@ -45,4 +46,5 @@ You can follow the project progress on this list.
 		- [ ] List Requests *(get, protect)* `[/]`
 		- [ ] Send Request *(post, protect)* `[/]`
 		- [ ] Reply Request *(post, protect)* `[/:requestId]`
+		- [ ] List Sended Requests for List *(get, protect)* `[/list/:listId]`
 		- [ ] Delete Sended Request *(delete, protect)* `[/:requestId]`
