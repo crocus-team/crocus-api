@@ -17,7 +17,8 @@ exports.myLists = asyncHandler(async (req, res, next) => {
 // create new list [POST,PROTECTED] (list)
 exports.addList = asyncHandler(async (req, res, next) => {
   req.body.owner_user = req.user.id
-  const list = await ListModel.create(req.body)
+  const create_list = await ListModel.create(req.body)
+  const list = await ListModel.findById(create_list._id).populate('tasks')
   res.status(200).json({
     success: true,
     data: list,
