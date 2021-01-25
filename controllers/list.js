@@ -8,6 +8,8 @@ exports.myLists = asyncHandler(async (req, res, next) => {
   let lists = await ListModel.find()
     .or([{ owner_user: req.user.id }, { shared_users: req.user.id }])
     .populate('tasks')
+    .populate('owner_user')
+    .populate('shared_users')
   res.status(200).json({
     success: true,
     data: lists,
