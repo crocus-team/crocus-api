@@ -50,7 +50,7 @@ exports.sendRequest = asyncHandler(async (req, res, next) => {
 
 // reply request [PUT,PROTECTED] (share/:requestId)
 exports.replyRequest = asyncHandler(async (req, res, next) => {
-  if (!req.body.status) {
+  if (!req.body.status && req.body.status !== 0) {
     return next(new ErrorResponse('status parameter is required', 403))
   }
   const request = await ShareModel.findOne({
@@ -71,6 +71,8 @@ exports.replyRequest = asyncHandler(async (req, res, next) => {
     } else {
       return next(new ErrorResponse('Bad invitation', 400))
     }
+  } else if (req.body.status === 0) {
+    request.remove();
   }
   res.status(200).json({
     success: true,
