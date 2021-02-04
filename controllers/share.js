@@ -6,7 +6,7 @@ const ListModel = require('../models/List')
 
 // list requests for me [GET,PROTECTED] (share)
 exports.listRequests = asyncHandler(async (req, res, next) => {
-  const requests = await ShareModel.find({ receiver: req.user.id })
+  const requests = await ShareModel.find({ receiver: req.user.id, status: 0 })
     .populate('sender')
     .populate('list')
   res.status(200).json({ success: true, data: requests })
