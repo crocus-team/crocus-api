@@ -43,7 +43,9 @@ exports.taskDetails = asyncHandler(async (req, res, next) => {
   if (checkAuthorize.authorize) {
     res.status(200).json({ success: true, data: task })
   } else {
-    return next(new ErrorResponse('You are not authorized to view this list', 401))
+    return next(
+      new ErrorResponse('You are not authorized to view this list', 401),
+    )
   }
 })
 
@@ -70,7 +72,35 @@ exports.updateTask = asyncHandler(async (req, res, next) => {
     await task.save()
     res.status(200).json({ success: true, data: task })
   } else {
-    return next(new ErrorResponse('You are not authorized to view this list', 401))
+    return next(
+      new ErrorResponse('You are not authorized to view this list', 401),
+    )
+  }
+})
+
+// toggle task [POST,PROTECTED] (task/:taskId/toggle)
+exports.toggleTask = asyncHandler(async (req, res, next) => {
+  const task = await TaskModel.findById(req.params.taskId)
+  if (!task) {
+    return next(
+      new ErrorResponse(`Task not found with id of ${task.list}`, 404),
+    )
+  }
+  const list = await ListModel.findById(task.list)
+  if (!list) {
+    return next(
+      new ErrorResponse(`List not found with id of ${task.list}`, 404),
+    )
+  }
+  const checkAuthorize = await list.checkAuthorize(req.user.id)
+  if (checkAuthorize.authorize) {
+    task.complate = req.body.complate
+    await task.save()
+    res.status(200).json({ success: true, data: task })
+  } else {
+    return next(
+      new ErrorResponse('You are not authorized to view this list', 401),
+    )
   }
 })
 
@@ -93,7 +123,9 @@ exports.deleteTask = asyncHandler(async (req, res, next) => {
     await task.remove()
     res.status(200).json({ success: true, data: {} })
   } else {
-    return next(new ErrorResponse('You are not authorized to view this list', 401))
+    return next(
+      new ErrorResponse('You are not authorized to view this list', 401),
+    )
   }
 })
 
