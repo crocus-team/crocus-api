@@ -4,6 +4,20 @@ const sendTokenResponse = require('../helpers/tokenResponse')
 const asyncHandler = require('../middlewares/async')
 const UserModel = require('../models/User')
 
+exports.getUserId = asyncHandler(async (req, res, next) => {
+  const user = await UserModel.findOne({email: req.params.email})
+  if (!user) {
+    return next(new ErrorResponse('User not found', 404))
+  }
+  res.status(200).json({
+    success: true,
+    data: {
+      _id: user._id
+    }
+  });
+})
+
+
 // update user details [PUT,PROTECTED] (user/details)
 exports.updateDetails = asyncHandler(async (req, res, next) => {
   const fieldsToUpdate = {
