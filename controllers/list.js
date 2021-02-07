@@ -29,7 +29,7 @@ exports.addList = asyncHandler(async (req, res, next) => {
 
 // list details [GET,PROTECTED] (list/:listId)
 exports.listDetails = asyncHandler(async (req, res, next) => {
-  const list = await ListModel.findById(req.params.listId).populate('tasks').populate('shared_users')
+  let list = await ListModel.findById(req.params.listId).populate('tasks')
   if (!list) {
     return next(
       new ErrorResponse(`List not found with id of ${req.params.listId}`, 404),
@@ -37,9 +37,10 @@ exports.listDetails = asyncHandler(async (req, res, next) => {
   }
   const checkAuthorize = await list.checkAuthorize(req.user.id)
   if (checkAuthorize.authorize) {
+    await list.populate('shared_users').populate('owner_user').execPopulate()
     res.status(200).json({
       success: true,
-      data: list,
+      data: list
     })
   } else {
     return next(

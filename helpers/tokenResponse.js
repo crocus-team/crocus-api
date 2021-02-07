@@ -13,7 +13,7 @@ const tokenResponse = (user, statusCode, res) => {
   res
     .status(statusCode)
     .cookie('token', token, options)
-    .json({ success: true, token })
+    .json({ success: true, token, _id: user._id })
 }
 
 module.exports = tokenResponse
