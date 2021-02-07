@@ -11,7 +11,7 @@ const ListSchema = new mongoose.Schema(
     color: {
       type: String,
       match: [
-        /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
+        /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{8})|$/,
         'Please add a valid hex color',
       ],
       default: '#333',
