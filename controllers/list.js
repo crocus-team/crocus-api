@@ -136,7 +136,7 @@ exports.sentRequests = asyncHandler(async (req, res, next) => {
       new ErrorResponse('You are not authorized to view this list', 401),
     )
   }
-  const requests = await ShareModel.find({ list: req.params.listId }).populate(
+  const requests = await ShareModel.find({ list: req.params.listId, status: 0 }).populate(
     'receiver',
   )
   res.status(200).json({

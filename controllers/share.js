@@ -45,7 +45,7 @@ exports.sendRequest = asyncHandler(async (req, res, next) => {
     }
   }
   const request = await ShareModel.create(request_data)
-  res.status(200).json(request)
+  res.status(200).json(await request.populate('receiver').execPopulate())
 })
 
 // reply request [PUT,PROTECTED] (share/:requestId)
